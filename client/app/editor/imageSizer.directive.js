@@ -78,26 +78,37 @@
 
         this._imageMetrics = angular.copy(this._imageOrigMetrics);
 
-        this._imageContorls = {
+        this._imageControls = {
             canvas: document.createElement('canvas')
         };
 
-        this._imageContorls.context = this._imageContorls.canvas.getContext("2d");
+        this._imageControls.context = this._imageControls.canvas.getContext("2d");
 
-        this._imageContorls.canvas.width = this._imageElm.width;
-        this._imageContorls.canvas.height = this._imageElm.height;
-        this._imageContorls.context.drawImage(this._imageElm, 0, 0);
+        this._imageControls.canvas.width = this._imageElm.width;
+        this._imageControls.canvas.height = this._imageElm.height;
+        this._imageControls.context.drawImage(this._imageElm, 0, 0);
         this.center();
     };
 
     ImageSizerCtrl.prototype._render = function() {
-        this._imageContorls.context.drawImage(this._imageElm,
+        var ctx = this._imageControls.context;
+        var canvas = this._imageControls.canvas;
+        // Store the current transformation matrix
+        ctx.save();
+
+        // Use the identity matrix while clearing the canvas
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Restore the transform
+        ctx.restore();
+        ctx.drawImage(this._imageElm,
             0,
             0,
             this._imageMetrics.width,
             this._imageMetrics.height);
 
-        this._element.find(this._vpElm).css("background-image", 'url(' +  this._imageContorls.canvas.toDataURL("image/jpeg") + ')');
+        this._element.find(this._vpElm).css("background-image", 'url(' +  this._imageControls.canvas.toDataURL("image/png") + ')');
     };
 
     ImageSizerCtrl.prototype.reset = function() {
@@ -166,14 +177,14 @@
     };
 
 //    ImageSizerCtrl.prototype._base64img = function(image){
-//        this._imageContorls = {
+//        this._imageControls = {
 //            canvas: document.createElement('canvas')
 //        };
-//        this._imageContorls.context = this._imageContorls.canvas.getContext("2d");
-//        this._imageContorls.canvas.width = image.width;
-//        this._imageContorls.canvas.height = image.height;
-//        this._imageContorls.context.drawImage(image, 0, 0);
-//        var blob = this._imageContorls.canvas.toDataURL("image/png");
+//        this._imageControls.context = this._imageControls.canvas.getContext("2d");
+//        this._imageControls.canvas.width = image.width;
+//        this._imageControls.canvas.height = image.height;
+//        this._imageControls.context.drawImage(image, 0, 0);
+//        var blob = this._imageControls.canvas.toDataURL("image/png");
 //        return blob.replace(/^data:image\/(png|jpg);base64,/, "");
 //    };
 
