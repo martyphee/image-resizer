@@ -1,0 +1,47 @@
+#image-viewport {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 540px;
+  height: 335px;
+  margin: -167px 0 0 -270px;
+//  background: #cdcdcd;
+  opacity: .5;
+  background-image: url('../assets/images/Board Members.jpg');
+  background-repeat: no-repeat;
+  border: 1px solid #cdcdcd;
+}
+
+#image-container {
+  border: 1px solid #cdcdcd;
+  position: relative;
+  width: 1024px;
+  height: 750px;
+}
+
+.image-size {
+  .button-wrapper {
+    .fa {
+      width: 25px;
+      height: 25px;
+      border: 1px solid #cdcdcd;
+      padding: 3px;
+    }
+    .direction-wrapper {
+      div {
+        padding: 3px;
+      }
+      clear: left;
+      display: table;
+
+      .trow {
+        display: table-row;
+      }
+
+      .tcell {
+        display: table-cell;
+        text-align: center
+      }
+    }
+  }
+}
